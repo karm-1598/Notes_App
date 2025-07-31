@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "954992740619",
+    "project_id": "collegenotes-b96aa",
+    "storage_bucket": "collegenotes-b96aa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954992740619:android:1e221b92e1263fecd2ba0e",
+        "android_client_info": {
+          "package_name": "com.example.college_notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954992740619-ejb6mre52hukgrfnlf9muqmu49a7cc4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8g-SxdExS9KBc2XG_q6UmLL-hfY818ns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954992740619-ejb6mre52hukgrfnlf9muqmu49a7cc4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "954992740619-amh1ggsb4ccskvgj3ec6ip2mhote37gh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.collegeNotes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
