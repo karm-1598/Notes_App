@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:college_notes/controllers/safe_areaController.dart';
 import 'package:college_notes/models/notesModel.dart';
 import 'package:college_notes/routes/routes.dart';
 import 'package:college_notes/screens/home/homeScreen.dart';
@@ -16,8 +17,8 @@ class Notesscreen extends StatefulWidget {
 }
 
 class _NotesscreenState extends State<Notesscreen> {
-  FirebaseAuth auth=FirebaseAuth.instance;
-  
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   final CollectionReference myNotes = FirebaseFirestore.instance.collection(
     'Notes',
   );
@@ -40,10 +41,10 @@ class _NotesscreenState extends State<Notesscreen> {
     color = (note.color == null || note.color == 0xFFFFFFFF)
         ? generateRandomColor()
         : note.color ?? const Color.fromARGB(255, 244, 244, 244).toARGB32();
-      titlecontroller.text=note.title??'';
-      messageController.text=note.message??'';
-    
+    titlecontroller.text = note.title ?? '';
+    messageController.text = note.message ?? '';
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -54,65 +55,65 @@ class _NotesscreenState extends State<Notesscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            noteId.isEmpty ? 'Add Note' : 'Edit Note',
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          backgroundColor: Colors.transparent,
-          actions: [
-            Row(
-              children: [
-                IconButton(onPressed: () {saveNotes();
-                  Get.offAll(Myhome());
-                }, icon: Icon(Icons.save)),
-
-                if (noteId.isNotEmpty)
-                  IconButton(
-                    onPressed: () {
-                      myNotes.doc(noteId).delete();
-                      Get.offAll(Myhome());
-                    },
-                    icon: Icon(Icons.delete),
-                  ),
-              ],
-            ),
-          ],
+    return Scaffold(
+      backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: Text(
+          noteId.isEmpty ? 'Add Note' : 'Edit Note',
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
-        body: Padding(
-          padding: EdgeInsets.all(15),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                customTextField(
-                  hintText: 'Titile',
-                  controller: titlecontroller,
-                  onChanged: (p0) {
-                    setState(() {
-                      titleString = p0;
-                    });
+        backgroundColor: Colors.transparent,
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  saveNotes();
+                  Get.offAll(Myhome());
+                },
+                icon: Icon(Icons.save),
+              ),
+    
+              if (noteId.isNotEmpty)
+                IconButton(
+                  onPressed: () {
+                    myNotes.doc(noteId).delete();
+                    Get.offAll(Myhome());
                   },
+                  icon: Icon(Icons.delete),
                 ),
-            
-                SizedBox(height: 20),
-            
-                TextField(
-                  controller: messageController,
-                  maxLines: null,
-                  onChanged: (value) {
-                    setState(() {
-                      messageString = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                   
-                    hintText: 'Message',
-                  ),
-                ),
-              ],
-            ),
+            ],
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(15),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              customTextField(
+                hintText: 'Titile',
+                controller: titlecontroller,
+                onChanged: (p0) {
+                  setState(() {
+                    titleString = p0;
+                  });
+                },
+              ),
+    
+              SizedBox(height: 20),
+    
+              TextField(
+                controller: messageController,
+                maxLines: null,
+                onChanged: (value) {
+                  setState(() {
+                    messageString = value;
+                  });
+                },
+                decoration: InputDecoration(hintText: 'Message'),
+              ),
+            ],
           ),
         ),
       ),
@@ -121,30 +122,28 @@ class _NotesscreenState extends State<Notesscreen> {
 
   void saveNotes() async {
     DateTime time = DateTime.now();
-    try{
+    try {
       if (noteId.isEmpty) {
-        final uid=auth.currentUser!.uid;
-      await myNotes.add({
-        'title': titlecontroller.text.trim(),
-        'message': messageController.text.trim(),
-        'createdAt': time.toString(),
-        'color': color,
-        'uid':uid,
-      });
-      
-    } else {
-      await myNotes.doc(noteId).update({
+        final uid = auth.currentUser!.uid;
+        await myNotes.add({
           'title': titlecontroller.text.trim(),
-          'message':messageController.text.trim(),
+          'message': messageController.text.trim(),
+          'createdAt': time.toString(),
+          'color': color,
+          'uid': uid,
+        });
+      } else {
+        await myNotes.doc(noteId).update({
+          'title': titlecontroller.text.trim(),
+          'message': messageController.text.trim(),
           'updatedAt': time.toString(),
           'color': color,
         });
-      
-      
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving note: ${e.toString()}')),
+      );
     }
-    }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error saving note: ${e.toString()}')));
-    }
-    
   }
 }
