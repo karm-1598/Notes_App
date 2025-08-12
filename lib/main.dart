@@ -2,12 +2,14 @@ import 'package:college_notes/firebase_options.dart';
 import 'package:college_notes/screens/spalsh/splashScreen.dart';
 import 'package:college_notes/theme/themeData.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
   runApp(const MyApp());
 }
 
@@ -25,3 +27,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// d0tfwlpnR9qhUlehyNZKeE:APA91bHxet6lYhCnC92A4CyDFOiqUnEEuGTfum3IFJkfwwujJ2tMylsju6JVSYkNdVj9zSaGVIthdrtCxc-GEMzvswQSI8Tme_WEwulF47B8pv5H0tk9ndc

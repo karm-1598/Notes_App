@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:college_notes/notificationServices/fcmServices.dart';
+import 'package:college_notes/notificationServices/notificatio.dart';
 import 'package:college_notes/routes/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class Splashscreen extends StatefulWidget {
 
 class _SplashscreenState extends State<Splashscreen> {
   Timer? timer;
+  NotificationServices notification =NotificationServices();
 
   @override
   void initState() {
@@ -21,6 +24,9 @@ class _SplashscreenState extends State<Splashscreen> {
     timer = Timer(Duration(seconds: 4), () {
       WidgetsBinding.instance.addPostFrameCallback((_) {
       checkUser();
+      notification.requestForNotification();
+      notification.getDevicetoken();
+      FcmServices.firebaseinit();
     });
     });
     

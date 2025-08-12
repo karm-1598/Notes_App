@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:college_notes/notificationServices/notificatio.dart';
 import 'package:college_notes/screens/auth/login.dart';
 import 'package:college_notes/utils/button.dart';
 import 'package:college_notes/utils/customTextField.dart';
@@ -28,11 +29,14 @@ class _SignUpState extends State<SignUp> {
         UserCredential? userCredential;
         userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: pass);
+        NotificationServices notification=NotificationServices();
+        String? token= await notification.getDevicetoken();
 
             await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
               'name': nameController.text,
               'email': email,
               'phone': phoneController.text,
+              'userDeviceToken':token,
               
             });
 

@@ -30,6 +30,21 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+            <!-- for notification channel -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="notes-channel"/>
+
+            <!-- Firebase Messaging Services -->
+        <receiver
+        android:name="com.dexterous.flutterlocalnotification.ScheduledNotificationBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETEd"/>
+            </intent-filter>
+        </receiver>
+        
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

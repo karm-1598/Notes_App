@@ -56,7 +56,6 @@ class _NotesscreenState extends State<Notesscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text(
           noteId.isEmpty ? 'Add Note' : 'Edit Note',
